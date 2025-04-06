@@ -19,12 +19,20 @@ namespace Dumpster_Diving
       storageRoomData = new StorageRoom();
       player = new PlayerChar();
       itemList = new ItemList();
-      itemList.AddItem(new Item(new Point(0, 4), Item.Size.Large, Color.Brown));
+      GenerateItem(new Item(new Point(0, 4), Item.Size.Large, Item.BoxColor.Yellow));
     }
 
     public List<Item> Items()
     {
       return itemList.Items;
+    }
+
+    public void GenerateItem(Item item)
+    {
+      itemList.AddItem(item);
+      foreach(Point position in item.positions) {
+        storageRoomData.storageRoom[position].Occupied = true;
+      }
     }
 
     public List<Point> StorageRoomTilePositions()
@@ -35,9 +43,14 @@ namespace Dumpster_Diving
     public void MovePlayer(Point movement)
     {
       Point checkedLocation = player.Position + movement;
-      if (StorageRoomTilePositions().Contains(checkedLocation)) {
+      if (StorageRoomTilePositions().Contains(checkedLocation) && !StorageRoomPositionIsOccupied(checkedLocation)) {
         player.Move(movement);
       }
+    }
+
+    public bool StorageRoomPositionIsOccupied(Point position)
+    {
+      return storageRoomData.storageRoom[position].Occupied;
     }
     public void TurnPlayerLeft()
     {

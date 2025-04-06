@@ -16,13 +16,28 @@ namespace Dumpster_Diving
       Tall,
       Large
     }
+    public enum BoxColor
+    {
+      Yellow,
+      Blue,
+      Red,
+      White
+    }
+
+    public Dictionary<BoxColor, Color> Colors = new()
+    {
+      { BoxColor.Yellow, Color.Yellow },
+      { BoxColor.Blue, Color.Blue },
+      { BoxColor.Red, Color.Red },
+      { BoxColor.White, Color.White }
+    };
 
     public List<Point> positions = new();
     public Point OriginPosition;
     public Size size;
-    public Color color;
-    public bool carried = false;
-    public Item(Point originPosition, Size size, Color color)
+    public BoxColor color;
+    public bool isHeld = false;
+    public Item(Point originPosition, Size size, BoxColor color)
     {
       OriginPosition = originPosition;
       this.size = size;

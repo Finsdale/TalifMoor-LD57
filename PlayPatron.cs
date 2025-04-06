@@ -1,5 +1,6 @@
 ﻿using BaseGameProject;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace Dumpster_Diving
 {
@@ -48,7 +49,7 @@ namespace Dumpster_Diving
           TC.Box,
           new Rectangle(item.OriginPosition.X * 32, item.OriginPosition.Y * 32, size.X, size.Y),
           new Rectangle(0, 0, 32, 32),
-          item.color);
+          item.Colors[item.color]);
       }
     }
 

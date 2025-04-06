@@ -20,7 +20,7 @@ namespace Dumpster_Diving
       Dump
     }
     Point Position { get; set; }
-    bool Occupied = false;
+    public bool Occupied = false;
     public TileType Type { get; set; }
 
     public Tile()
