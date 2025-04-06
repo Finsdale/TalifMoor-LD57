@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GitHub\\BaseGameProject\\BaseGameProject\\BaseGameProject.csproj": {}
+    "C:\\GitHub\\TalifMoor-LD57\\BaseGameProject.csproj": {}
   },
   "projects": {
-    "C:\\GitHub\\BaseGameProject\\BaseGameProject\\BaseGameProject.csproj": {
+    "C:\\GitHub\\TalifMoor-LD57\\BaseGameProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GitHub\\BaseGameProject\\BaseGameProject\\BaseGameProject.csproj",
+        "projectUniqueName": "C:\\GitHub\\TalifMoor-LD57\\BaseGameProject.csproj",
         "projectName": "BaseGameProject",
-        "projectPath": "C:\\GitHub\\BaseGameProject\\BaseGameProject\\BaseGameProject.csproj",
+        "projectPath": "C:\\GitHub\\TalifMoor-LD57\\BaseGameProject.csproj",
         "packagesPath": "C:\\Users\\Talif\\.nuget\\packages\\",
-        "outputPath": "C:\\GitHub\\BaseGameProject\\BaseGameProject\\obj\\",
+        "outputPath": "C:\\GitHub\\TalifMoor-LD57\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

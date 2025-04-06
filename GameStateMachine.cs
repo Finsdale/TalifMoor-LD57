@@ -35,7 +35,9 @@ namespace BaseGameProject
 
     public void Update(Input input)
     {
-      GameStack[^1].Update(input);
+      if(GameStack.Count > 0) {
+        GameStack[^1].Update(input);
+      }
     }
 
     public void Draw(IArtist artist)
