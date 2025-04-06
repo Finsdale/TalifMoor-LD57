@@ -11,8 +11,9 @@ namespace Dumpster_Diving
   {
     public enum TileType
     {
-      Obstruction,
+      Null = -1,
       Storage,
+      Obstruction,
       Entry,
       Exit,
       EntryAndExit,
@@ -21,6 +22,13 @@ namespace Dumpster_Diving
     Point Position { get; set; }
     bool Occupied = false;
     public TileType Type { get; set; }
+
+    public Tile()
+    {
+      Position = new Point();
+      Type = TileType.Null;
+      Occupied = true;
+    }
     public Tile(Point position, TileType type = TileType.Storage, bool occupied = false)
     {
       this.Position = position;

@@ -9,6 +9,8 @@ namespace BaseGameProject
   public sealed class TextureCollection
   {
     private static readonly TextureCollection collection = new TextureCollection();
+    public Texture2D Floors { get; private set; }
+    public Texture2D Player { get; private set; }
 
     private TextureCollection() { }
     public static TextureCollection Instance
@@ -21,6 +23,8 @@ namespace BaseGameProject
 
     public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
     {
+      Floors = content.Load<Texture2D>("Floor tile");
+      Player = content.Load<Texture2D>("Player");
     }
   }
 }

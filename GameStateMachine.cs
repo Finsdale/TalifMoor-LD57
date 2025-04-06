@@ -1,4 +1,5 @@
 ﻿using ControllerInput;
+using Dumpster_Diving;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace BaseGameProject
   public class GameStateMachine
   {
     public List<IGameState> GameStack = new List<IGameState>();
-
+    public PlayState playState;
     public bool Exit { get; set; } = false;
 
     public GameStateMachine()
     {
+      playState = new PlayState(this);
+      Push(playState);
     }
 
     public void Clear()
@@ -33,7 +36,7 @@ namespace BaseGameProject
       GameStack.RemoveAt(GameStack.Count - 1);
     }
 
-    public void Update(Input input)
+    public void Update(NewInput input)
     {
       if(GameStack.Count > 0) {
         GameStack[^1].Update(input);

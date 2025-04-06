@@ -9,8 +9,7 @@ namespace BaseGameProject
   {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    readonly InputAdapter p1Control;
-    Input playerOne;
+    NewInput playerOne;
     readonly TextureCollection TC;
     readonly GameStateMachine gameStateMachine;
     readonly ConcreteArtist artist;
@@ -22,8 +21,7 @@ namespace BaseGameProject
       _graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";
       IsMouseVisible = true;
-      p1Control = new InputAdapter();
-      playerOne = new Input();
+      playerOne = new NewInput(0,true);
       gameStateMachine = new GameStateMachine();
       artist = new ConcreteArtist();
     }
@@ -46,7 +44,7 @@ namespace BaseGameProject
     {
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
         Exit();
-      playerOne = p1Control.GetInput();
+      playerOne.Update();
       gameStateMachine.Update(playerOne);
       if (gameStateMachine.Exit == true) Exit();
 
