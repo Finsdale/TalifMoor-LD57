@@ -15,40 +15,40 @@ namespace Dumpster_Diving
   public class PlayState : IGameState
   {
     public GameStateMachine gameStateMachine;
-    public Scenario scenario { get; set; }
-    public PlayPatron patron { get; set; }
+    public Scenario Scenario { get; set; }
+    public PlayPatron Patron { get; set; }
     public PlayState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
-      scenario = new Scenario();
-      patron = new PlayPatron(scenario);
+      Scenario = new Scenario();
+      Patron = new PlayPatron(Scenario);
     }
 
     public void Update(NewInput input)
     {
       if (input.KBInput.IsButtonPressed(Keys.W)) {
-        scenario.MovePlayer(new Point(0, -1));
+        Scenario.MovePlayer(new Point(0, -1));
       }
       if (input.KBInput.IsButtonPressed(Keys.A)) {
-        scenario.MovePlayer(new Point(-1,0));
+        Scenario.MovePlayer(new Point(-1,0));
       }
       if (input.KBInput.IsButtonPressed(Keys.S)) {
-        scenario.MovePlayer(new Point(0,1));
+        Scenario.MovePlayer(new Point(0,1));
       }
       if (input.KBInput.IsButtonPressed(Keys.D)) {
-        scenario.MovePlayer(new Point(1,0));
+        Scenario.MovePlayer(new Point(1,0));
       }
       if (input.KBInput.IsButtonPressed(Keys.Q)) {
-        scenario.TurnPlayerLeft();
+        Scenario.TurnPlayerLeft();
       }
       if (input.KBInput.IsButtonPressed(Keys.E)) {
-        scenario.TurnPlayerRight();
+        Scenario.TurnPlayerRight();
       }
     }
 
     public void Draw(IArtist artist)
     {
-      patron.Draw(artist);
+      Patron.Draw(artist);
     }
   }
 }

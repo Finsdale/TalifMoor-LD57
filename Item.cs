@@ -16,14 +16,8 @@ namespace Dumpster_Diving
       Tall,
       Large
     }
-    public enum Color
-    {
-      Yellow,
-      Green,
-      Blue,
-      Pink
-    }
-    public List<Point> positions = new List<Point>();
+
+    public List<Point> positions = new();
     public Point OriginPosition;
     public Size size;
     public Color color;

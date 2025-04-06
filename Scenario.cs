@@ -10,13 +10,21 @@ namespace Dumpster_Diving
   public class Scenario
   {
 
-    StorageRoom storageRoomData;
+    readonly StorageRoom storageRoomData;
     public PlayerChar player;
+    readonly ItemList itemList;
 
     public Scenario()
     {
       storageRoomData = new StorageRoom();
       player = new PlayerChar();
+      itemList = new ItemList();
+      itemList.AddItem(new Item(new Point(0, 4), Item.Size.Large, Color.Brown));
+    }
+
+    public List<Item> Items()
+    {
+      return itemList.Items;
     }
 
     public List<Point> StorageRoomTilePositions()

@@ -11,7 +11,7 @@ namespace BaseGameProject
 {
   public class GameStateMachine
   {
-    public List<IGameState> GameStack = new List<IGameState>();
+    public List<IGameState> GameStack = new();
     public PlayState playState;
     public bool Exit { get; set; } = false;
 

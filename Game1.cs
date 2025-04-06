@@ -7,9 +7,9 @@ namespace BaseGameProject
 {
   public class Game1 : Game
   {
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    NewInput playerOne;
+    readonly NewInput playerOne;
     readonly TextureCollection TC;
     readonly GameStateMachine gameStateMachine;
     readonly ConcreteArtist artist;

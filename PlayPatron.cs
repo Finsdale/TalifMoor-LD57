@@ -1,17 +1,12 @@
 ﻿using BaseGameProject;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dumpster_Diving
 {
   public class PlayPatron : IPatron
   {
     readonly TextureCollection TC;
-    Scenario scenario;
+    readonly Scenario scenario;
 
     public PlayPatron(Scenario scenario)
     {
@@ -23,16 +18,41 @@ namespace Dumpster_Diving
       foreach(var position in scenario.StorageRoomTilePositions()) {
         artist.Draw(TC.Floors,
           DestinationRectangle(position),
-          SourceRectangle(position),
+          SourceRectangle(),
           Color.White);
       }
       artist.Draw(TC.Player,
         new Rectangle(scenario.player.Position.X * 32, scenario.player.Position.Y * 32, 32, 32),
         new Rectangle((int)scenario.player.Facing * 32, 0, 32, 32),
         Color.White);
+      foreach(var item in scenario.Items()) {
+        Point size;
+        switch (item.size) {
+          case Item.Size.Small:
+            size = new Point(32, 32);
+            break;
+          case Item.Size.Long:
+            size = new Point(64, 32);
+            break;
+          case Item.Size.Tall:
+            size = new Point(32, 64);
+            break;
+          case Item.Size.Large:
+            size = new Point(64, 64);
+            break;
+          default:
+            size = new Point(32, 32);
+            break;
+        }
+        artist.Draw(
+          TC.Box,
+          new Rectangle(item.OriginPosition.X * 32, item.OriginPosition.Y * 32, size.X, size.Y),
+          new Rectangle(0, 0, 32, 32),
+          item.color);
+      }
     }
 
-    internal Rectangle DestinationRectangle(Point position)
+    internal static Rectangle DestinationRectangle(Point position)
     {
       return new Rectangle(
         position.X * 32,
@@ -40,9 +60,9 @@ namespace Dumpster_Diving
         32,32);
     }
 
-    internal Rectangle SourceRectangle(Point position)
+    internal static Rectangle SourceRectangle()
     {
-      Rectangle result = new Rectangle(0, 0, 32, 32);
+      Rectangle result = new(0, 0, 32, 32);
       return result;
     }
   }
