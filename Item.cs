@@ -63,5 +63,53 @@ namespace Dumpster_Diving
       }
       positions = newPositions;
     }
+
+    public static int WidthBySize(Size size)
+    {
+      return size switch
+      {
+        Size.Small => 32,
+        Size.Tall => 32,
+        Size.Long => 64,
+        Size.Large => 64,
+        _ => 0
+      };
+    }
+
+    public static int HeightBySize(Size size)
+    {
+      return size switch
+      {
+        Size.Small => 32,
+        Size.Tall => 64,
+        Size.Long => 32,
+        Size.Large => 64,
+        _ => 0
+      };
+    }
+
+    public static int XDrawOriginBySize(Size size)
+    {
+      return size switch
+      {
+        Size.Small => 0,
+        Size.Tall => 0,
+        Size.Long => 32,
+        Size.Large => 32,
+        _ => 0
+      };
+    }
+
+    public static int YDrawOriginBySize(Size size)
+    {
+      return size switch
+      {
+        Size.Small => 0,
+        Size.Tall => 32,
+        Size.Long => 0,
+        Size.Large => 32,
+        _ => 0
+      };
+    }
   }
 }

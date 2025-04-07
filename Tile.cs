@@ -2,7 +2,7 @@
 
 namespace Dumpster_Diving
 {
-  internal class Tile
+  public class Tile
   {
     public enum TileType
     {

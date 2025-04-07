@@ -6,7 +6,7 @@ namespace Dumpster_Diving
   public class PlayPatron : IPatron
   {
     readonly TextureCollection TC;
-    readonly Scenario scenario;
+    Scenario scenario;
 
     public PlayPatron(Scenario scenario)
     {
@@ -18,39 +18,33 @@ namespace Dumpster_Diving
       foreach(var position in scenario.StorageRoomTilePositions()) {
         artist.Draw(TC.Floors,
           DestinationRectangle(position),
-          SourceRectangle(),
+          SourceRectangle(position),
           Color.White);
       }
+
       artist.Draw(TC.Player,
         new Rectangle(scenario.player.Position.X * 32, scenario.player.Position.Y * 32, 32, 32),
         new Rectangle((int)scenario.player.Facing * 32, 0, 32, 32),
         Color.White);
+
       foreach(var item in scenario.Items()) {
-        Point size;
-        switch (item.size) {
-          case Item.Size.Small:
-            size = new Point(32, 32);
-            break;
-          case Item.Size.Long:
-            size = new Point(64, 32);
-            break;
-          case Item.Size.Tall:
-            size = new Point(32, 64);
-            break;
-          case Item.Size.Large:
-            size = new Point(64, 64);
-            break;
-          default:
-            size = new Point(32, 32);
-            break;
-        }
         artist.Draw(
           TC.Box,
-          new Rectangle(item.OriginPosition.X * 32, item.OriginPosition.Y * 32, size.X, size.Y),
-          new Rectangle(0, 0, 32, 32),
+          new Rectangle(
+            item.OriginPosition.X * 32,
+            item.OriginPosition.Y * 32, 
+            Item.WidthBySize(item.size), 
+            Item.HeightBySize(item.size)),
+          new Rectangle(
+            Item.XDrawOriginBySize(item.size), 
+            Item.YDrawOriginBySize(item.size),
+            Item.WidthBySize(item.size),
+            Item.HeightBySize(item.size)),
           item.Colors[item.color]);
       }
     }
+
+
 
     internal static Rectangle DestinationRectangle(Point position)
     {
@@ -60,10 +54,24 @@ namespace Dumpster_Diving
         32,32);
     }
 
-    internal static Rectangle SourceRectangle()
+    internal Rectangle SourceRectangle(Point position)
     {
-      Rectangle result = new(0, 0, 32, 32);
+      Tile tile = scenario.GetTileAtRoomPosition(position);
+      int XPosition = GetSourceXPositionFromTileType(tile);
+      Rectangle result = new(XPosition, 0, 32, 32);
       return result;
     }
+
+    int GetSourceXPositionFromTileType(Tile tile)
+    {
+      return tile.Type switch
+      {
+        Tile.TileType.Storage => 0,
+        Tile.TileType.Entry => 32,
+        Tile.TileType.EntryOrigin => 32,
+        Tile.TileType.Exit => 64,
+        _ => 0,
+      };
+     }
   }
 }
