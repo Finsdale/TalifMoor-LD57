@@ -25,5 +25,9 @@ namespace Dumpster_Diving
     public bool Complete() { return Current == 0; }
     public bool Fresh() { return Current == Length; }
     public void MatchBonus(int pointsGained) { Current += (0.30f * pointsGained); }
+    public float PercentTimerRemains()
+    {
+      return Math.Min(1, Current / Length);
+    }
   }
 }
