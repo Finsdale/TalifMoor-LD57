@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:Floor tile.png
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
 #begin Player.png
 /importer:TextureImporter
 /processor:TextureProcessor
