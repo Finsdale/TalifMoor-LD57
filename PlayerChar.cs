@@ -16,7 +16,14 @@ namespace Dumpster_Diving
       Down = 2,
       Left = 3
     }
+    public Dictionary<Direction, Point> DirectionToPointConversion = new(){
+      {Direction.Up, new Point(0, -1) },
+      {Direction.Right, new Point(1, 0) },
+      {Direction.Down, new Point(0, 1) },
+      {Direction.Left, new Point(-1, 0) }
+    };
     public Direction Facing = Direction.Up;
+    public bool HoldsItem = false;
     public Point Position { get; set; }
     public PlayerChar()
     {
@@ -38,6 +45,10 @@ namespace Dumpster_Diving
     public void TurnLeft()
     {
       Facing = (Direction)(((int)Facing + 3) % 4);
+    }
+    public Point FacedPosition()
+    {
+      return Position + DirectionToPointConversion[Facing];
     }
   }
 }

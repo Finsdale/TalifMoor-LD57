@@ -13,7 +13,7 @@ namespace Dumpster_Diving
     public ItemList() {}
     public bool HasItemAtLocation(Point location)
     {
-      bool result = Items.Find(x => x.positions.Contains(location)) == null;
+      bool result = Items.Find(x => x.positions.Contains(location)) != null;
       return result;
     }
 
@@ -25,6 +25,10 @@ namespace Dumpster_Diving
     public void AddItem(Item item)
     {
       Items.Add(item);
+    }
+    public Item GetHeldItem()
+    {
+      return Items.Find(x => x.isHeld);
     }
   }
 }

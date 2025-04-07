@@ -44,6 +44,9 @@ namespace Dumpster_Diving
       if (input.KBInput.IsButtonPressed(Keys.E)) {
         Scenario.TurnPlayerRight();
       }
+      if (input.KBInput.IsButtonPressed(Keys.Space)) {
+        Scenario.PlayerGrabsOrDropsItem();
+      }
     }
 
     public void Draw(IArtist artist)

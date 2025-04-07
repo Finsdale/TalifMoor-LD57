@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dumpster_Diving
 {
@@ -30,9 +27,28 @@ namespace Dumpster_Diving
     public void GenerateItem(Item item)
     {
       itemList.AddItem(item);
-      foreach(Point position in item.positions) {
-        storageRoomData.storageRoom[position].Occupied = true;
+      storageRoomData.ToggleOccupiedForPositions(item.positions);
+    }
+
+    public void PlayerGrabsOrDropsItem()
+    {
+      Item heldItem;
+      if (player.HoldsItem) {
+        heldItem = itemList.GetItemAtLocation(player.FacedPosition());
+        storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
+        heldItem.isHeld = false;
+        player.HoldsItem = false;
       }
+      else if(PlayerIsFacingItem()) {
+        heldItem = itemList.GetItemAtLocation(player.FacedPosition());
+        storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
+        heldItem.isHeld = true;
+        player.HoldsItem = true;
+      }
+    }
+    public bool PlayerIsFacingItem()
+    {
+      return itemList.HasItemAtLocation(player.FacedPosition());
     }
 
     public List<Point> StorageRoomTilePositions()
@@ -42,10 +58,32 @@ namespace Dumpster_Diving
 
     public void MovePlayer(Point movement)
     {
-      Point checkedLocation = player.Position + movement;
-      if (StorageRoomTilePositions().Contains(checkedLocation) && !StorageRoomPositionIsOccupied(checkedLocation)) {
-        player.Move(movement);
+      Item heldItem = null;
+      bool destinationIsOccupied = false;
+      List<Point> checkedLocations = new();
+      checkedLocations.Add(player.Position + movement);
+      if (player.HoldsItem) {
+        heldItem = itemList.GetHeldItem();
+        foreach(Point position in heldItem.positions) {
+          checkedLocations.Add(position + movement);
+        }
       }
+      foreach (Point position in checkedLocations) {
+        if (storageRoomData.GetTileAtPosition(position).Occupied) {
+          destinationIsOccupied = true;
+          break;
+        }
+      }
+
+      if (!destinationIsOccupied) {
+        player.Move(movement);
+        if (heldItem != null) heldItem.Move(movement);
+      }
+
+      //Point checkedLocation = player.Position + movement;
+      //if (StorageRoomTilePositions().Contains(checkedLocation) && !StorageRoomPositionIsOccupied(checkedLocation)) {
+      //  player.Move(movement);
+      //}
     }
 
     public bool StorageRoomPositionIsOccupied(Point position)
@@ -54,11 +92,11 @@ namespace Dumpster_Diving
     }
     public void TurnPlayerLeft()
     {
-      player.TurnLeft();
+      if (!player.HoldsItem) player.TurnLeft();
     }
     public void TurnPlayerRight()
     {
-      player.TurnRight();
+      if (!player.HoldsItem) player.TurnRight();
     }
   }
 }

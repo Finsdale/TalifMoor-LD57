@@ -31,5 +31,13 @@ namespace Dumpster_Diving
       var tile = GetTileAtPosition(position);
       return (int)tile.Type;
     }
+
+    public void ToggleOccupiedForPositions(List<Point> positions)
+    {
+      foreach (var position in positions) {
+        Tile tile = GetTileAtPosition(position);
+        tile.Occupied = !tile.Occupied;
+      }
+    }
   }
 }

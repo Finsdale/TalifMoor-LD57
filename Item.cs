@@ -57,5 +57,15 @@ namespace Dumpster_Diving
           break;
       }
     }
+
+    public void Move(Point movement)
+    {
+      List<Point> newPositions = new List<Point>();
+      OriginPosition += movement;
+      foreach(Point position in positions) {
+        newPositions.Add(position + movement);
+      }
+      positions = newPositions;
+    }
   }
 }
