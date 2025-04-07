@@ -14,6 +14,7 @@ namespace Dumpster_Diving
       Null = -1,
       Storage,
       Obstruction,
+      EntryOrigin,
       Entry,
       Exit,
       EntryAndExit,
@@ -39,6 +40,11 @@ namespace Dumpster_Diving
       else {
         this.Occupied = occupied;
       }
+    }
+
+    public bool IsEntryPosition()
+    {
+      return this.Type == TileType.Entry || this.Type == TileType.EntryOrigin;
     }
   }
 }

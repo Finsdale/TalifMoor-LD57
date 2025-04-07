@@ -18,6 +18,15 @@ namespace Dumpster_Diving
           storageRoom.Add(new Point(x,y), new Tile(new Point(x,y)));
         }
       }
+
+      GetTileAtPosition(new Point(0,4)).Type = Tile.TileType.EntryOrigin;
+      GetTileAtPosition(new Point(0,5)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(1,4)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(1,5)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(8,4)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(8,5)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(9,4)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(9,5)).Type = Tile.TileType.Exit;
     }
 
     public Tile GetTileAtPosition(Point position)
@@ -38,6 +47,11 @@ namespace Dumpster_Diving
         Tile tile = GetTileAtPosition(position);
         tile.Occupied = !tile.Occupied;
       }
+    }
+
+    public bool AreAnyEntryPositionsOccupied()
+    {
+      return storageRoom.Where(x => x.Value.IsEntryPosition() && x.Value.Occupied == true).Count() > 0;
     }
   }
 }
