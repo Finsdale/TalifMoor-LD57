@@ -55,5 +55,20 @@ namespace Dumpster_Diving
     {
       return storageRoom.Where(x => x.Value.Type == Tile.TileType.EntryOrigin).First().Key;
     }
+
+    public List<Point> GetExitTilePositions()
+    {
+      return storageRoom.Where(x => x.Value.Type == Tile.TileType.Exit).Select(x => x.Key).ToList();
+    }
+
+    public bool ExitZoneIsClean()
+    {
+      return storageRoom.Where(x => x.Value.Type == Tile.TileType.Exit).All(x => x.Value.Occupied == false);
+    }
+
+    public List<Point> GetEntryZonePositions()
+    {
+      return storageRoom.Where(x => x.Value.Type == Tile.TileType.Entry || x.Value.Type == Tile.TileType.EntryOrigin).Select(x => x.Key).ToList();
+    }
   }
 }

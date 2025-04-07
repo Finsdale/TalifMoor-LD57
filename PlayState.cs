@@ -19,28 +19,31 @@ namespace Dumpster_Diving
 
     public void Update(NewInput input)
     {
-      if (input.KBInput.IsButtonPressed(Keys.W)) {
-        Scenario.MovePlayer(new Point(0, -1));
+      if (!Scenario.GameOver) {
+        if (input.KBInput.IsButtonPressed(Keys.W)) {
+          Scenario.MovePlayer(new Point(0, -1));
+        }
+        if (input.KBInput.IsButtonPressed(Keys.A)) {
+          Scenario.MovePlayer(new Point(-1, 0));
+        }
+        if (input.KBInput.IsButtonPressed(Keys.S)) {
+          Scenario.MovePlayer(new Point(0, 1));
+        }
+        if (input.KBInput.IsButtonPressed(Keys.D)) {
+          Scenario.MovePlayer(new Point(1, 0));
+        }
+        if (input.KBInput.IsButtonPressed(Keys.Q)) {
+          Scenario.TurnPlayerLeft();
+        }
+        if (input.KBInput.IsButtonPressed(Keys.E)) {
+          Scenario.TurnPlayerRight();
+        }
+        if (input.KBInput.IsButtonPressed(Keys.Space)) {
+          Scenario.PlayerGrabsOrDropsItem();
+        }
+        Scenario.GenerateItem();
+        Scenario.Update();
       }
-      if (input.KBInput.IsButtonPressed(Keys.A)) {
-        Scenario.MovePlayer(new Point(-1,0));
-      }
-      if (input.KBInput.IsButtonPressed(Keys.S)) {
-        Scenario.MovePlayer(new Point(0,1));
-      }
-      if (input.KBInput.IsButtonPressed(Keys.D)) {
-        Scenario.MovePlayer(new Point(1,0));
-      }
-      if (input.KBInput.IsButtonPressed(Keys.Q)) {
-        Scenario.TurnPlayerLeft();
-      }
-      if (input.KBInput.IsButtonPressed(Keys.E)) {
-        Scenario.TurnPlayerRight();
-      }
-      if (input.KBInput.IsButtonPressed(Keys.Space)) {
-        Scenario.PlayerGrabsOrDropsItem();
-      }
-      Scenario.GenerateItem();
     }
 
     public void Draw(IArtist artist)

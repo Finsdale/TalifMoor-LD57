@@ -11,6 +11,9 @@ namespace Dumpster_Diving
     public PlayerChar player;
     readonly ItemList itemList;
     readonly ItemGenerator itemGenerator;
+    public Scoring scoring;
+    GameTimer gameTimer;
+    public bool GameOver = false;
 
     public Scenario()
     {
@@ -18,7 +21,18 @@ namespace Dumpster_Diving
       player = new PlayerChar();
       itemList = new ItemList();
       itemGenerator = new ItemGenerator();
+      scoring = new Scoring(itemGenerator.GenerateItem(new Point()));
       GenerateItem();
+      gameTimer = new GameTimer();
+      gameTimer.Reset();
+    }
+
+    public void Update()
+    {
+      gameTimer.Update();
+      if (gameTimer.Complete()) {
+        GameOver = true;
+      }
     }
 
     public Tile GetTileAtRoomPosition(Point position)
@@ -33,11 +47,16 @@ namespace Dumpster_Diving
 
     public void GenerateItem()
     {
-      if(!player.HoldsItem && !storageRoomData.AreAnyEntryPositionsOccupied()) {
+      if(!player.HoldsItem && !storageRoomData.AreAnyEntryPositionsOccupied() && PlayerIsNotOnEntryZone()) {
         Item item = itemGenerator.GenerateItem(storageRoomData.PositionOfEntryOrigin());
         itemList.AddItem(item);
         storageRoomData.ToggleOccupiedForPositions(item.positions);
       }
+    }
+
+    bool PlayerIsNotOnEntryZone()
+    {
+      return !storageRoomData.GetEntryZonePositions().Contains(player.Position);
     }
 
     public void PlayerGrabsOrDropsItem()
@@ -45,8 +64,18 @@ namespace Dumpster_Diving
       Item heldItem;
       if (player.HoldsItem) {
         heldItem = itemList.GetItemAtLocation(player.FacedPosition());
-        storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
-        heldItem.isHeld = false;
+        List<Point> exitTilePositions = storageRoomData.GetExitTilePositions();
+        int coveredPositions = exitTilePositions.Intersect(heldItem.positions).Count();
+        if(coveredPositions == heldItem.NumberOfOccupiedSpaces() && storageRoomData.ExitZoneIsClean()) {
+          int pointsGained = scoring.ScoreItem(heldItem);
+          gameTimer.MatchBonus(pointsGained);
+          itemList.RemoveHeldItem();
+          scoring.SetRequestedItem(itemGenerator.GenerateItem(new Point()));
+        }
+        else {
+          storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
+          heldItem.isHeld = false;
+        }
         player.HoldsItem = false;
       }
       else if(PlayerIsFacingItem()) {

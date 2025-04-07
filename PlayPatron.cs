@@ -15,6 +15,8 @@ namespace Dumpster_Diving
     }
     public void Draw(IArtist artist)
     {
+      artist.Draw(TC.BackDrop, new Rectangle(0, 0, 400, 225), new Rectangle(0, 0, 400, 225), Color.White);
+
       foreach(var position in scenario.StorageRoomTilePositions()) {
         artist.Draw(TC.Floors,
           DestinationRectangle(position),
@@ -23,7 +25,7 @@ namespace Dumpster_Diving
       }
 
       artist.Draw(TC.Player,
-        new Rectangle(scenario.player.Position.X * 32, scenario.player.Position.Y * 32, 32, 32),
+        new Rectangle(scenario.player.Position.X * 32 + 5, scenario.player.Position.Y * 32 + 28, 32, 32),
         new Rectangle((int)scenario.player.Facing * 32, 0, 32, 32),
         Color.White);
 
@@ -31,8 +33,8 @@ namespace Dumpster_Diving
         artist.Draw(
           TC.Box,
           new Rectangle(
-            item.OriginPosition.X * 32,
-            item.OriginPosition.Y * 32, 
+            item.OriginPosition.X * 32 + 5,
+            item.OriginPosition.Y * 32 + 28, 
             Item.WidthBySize(item.size), 
             Item.HeightBySize(item.size)),
           new Rectangle(
@@ -42,6 +44,16 @@ namespace Dumpster_Diving
             Item.HeightBySize(item.size)),
           item.Colors[item.color]);
       }
+
+      Item requestedItem = scenario.scoring.GetRequestedItem();
+      artist.Draw(
+        TC.Box,
+        new Rectangle(329, 37, Item.WidthBySize(requestedItem.size), Item.HeightBySize(requestedItem.size)),
+        new Rectangle(Item.XDrawOriginBySize(requestedItem.size), Item.YDrawOriginBySize(requestedItem.size), Item.WidthBySize(requestedItem.size), Item.HeightBySize(requestedItem.size)),
+        requestedItem.Colors[requestedItem.color]);
+
+      artist.DrawString(TC.Font, $"Score: {scenario.scoring.GetScore()}", new Point(220, 0).ToVector2(), Color.Black);
+      artist.DrawString(TC.Font, $"High Score: {scenario.scoring.GetHighScore()}", new Point(14, 0).ToVector2(), Color.Black);
     }
 
 
@@ -49,8 +61,8 @@ namespace Dumpster_Diving
     internal static Rectangle DestinationRectangle(Point position)
     {
       return new Rectangle(
-        position.X * 32,
-        position.Y * 32,
+        position.X * 32 + 5,
+        position.Y * 32 + 28,
         32,32);
     }
 

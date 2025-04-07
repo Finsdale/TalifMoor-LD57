@@ -26,5 +26,9 @@ namespace Dumpster_Diving
     {
       return Items.Find(x => x.isHeld);
     }
+    public void RemoveHeldItem()
+    {
+      Items.RemoveAt(Items.FindIndex(x => x.isHeld));
+    }
   }
 }

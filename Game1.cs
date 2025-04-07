@@ -29,10 +29,10 @@ namespace BaseGameProject
 
     protected override void Initialize()
     {
-      _graphics.PreferredBackBufferWidth = 1280;
-      _graphics.PreferredBackBufferHeight = 720;
+      _graphics.PreferredBackBufferWidth = 1200;
+      _graphics.PreferredBackBufferHeight = 675;
       _graphics.ApplyChanges();
-      _renderTarget = new RenderTarget2D(GraphicsDevice, 800, 450, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+      _renderTarget = new RenderTarget2D(GraphicsDevice, 400, 225, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
       // TODO: Add your initialization logic here
 
       base.Initialize();
@@ -70,7 +70,7 @@ namespace BaseGameProject
       GraphicsDevice.SetRenderTarget(null);
       GraphicsDevice.Clear(Color.BlueViolet);
       _spriteBatch.Begin();
-      _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, 1280, 720), Color.White);
+      _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, 1200, 675), Color.White);
       _spriteBatch.End();
 
       // TODO: Add your drawing code here

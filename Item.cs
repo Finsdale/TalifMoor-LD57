@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Dumpster_Diving
 {
@@ -110,6 +112,47 @@ namespace Dumpster_Diving
         Size.Large => 32,
         _ => 0
       };
+    }
+
+    public int NumberOfOccupiedSpaces()
+    {
+      return this.size switch
+      {
+        Size.Small => 1,
+        Size.Tall => 2,
+        Size.Long => 2,
+        Size.Large => 4,
+        _ => 0
+      };
+    }
+
+    public override bool Equals(object obj)
+    {
+      bool result;
+      if (obj == null || !(obj is Item))
+        result = false;
+      else
+        result = size == ((Item)obj).size && color == ((Item)obj).color;
+      return result;
+    }
+
+    public override int GetHashCode()
+    {
+      return HashCode.Combine(size, color);
+    }
+
+    public static bool operator ==(Item item1, Item item2)
+    {
+      bool result;
+      if (item1 is null)
+        result = item2 is null;
+      else
+        result = item1.Equals(item2);
+      return result;
+    }
+    public static bool operator!=(Item item1, Item item2)
+    {
+      return !(item1 == item2);
     }
   }
 }
