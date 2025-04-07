@@ -9,6 +9,7 @@ namespace BaseGameProject
   {
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    RenderTarget2D _renderTarget;
     readonly NewInput playerOne;
     readonly TextureCollection TC;
     readonly GameStateMachine gameStateMachine;
@@ -28,6 +29,10 @@ namespace BaseGameProject
 
     protected override void Initialize()
     {
+      _graphics.PreferredBackBufferWidth = 1280;
+      _graphics.PreferredBackBufferHeight = 720;
+      _graphics.ApplyChanges();
+      _renderTarget = new RenderTarget2D(GraphicsDevice, 800, 450, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
       // TODO: Add your initialization logic here
 
       base.Initialize();
@@ -55,10 +60,17 @@ namespace BaseGameProject
 
     protected override void Draw(GameTime gameTime)
     {
-      GraphicsDevice.Clear(Color.CornflowerBlue);
+      GraphicsDevice.SetRenderTarget(_renderTarget);
+      GraphicsDevice.Clear(Color.BlueViolet);
       _spriteBatch.Begin();
       artist.SpriteBatch = _spriteBatch;
       gameStateMachine.Draw(artist);
+      _spriteBatch.End();
+
+      GraphicsDevice.SetRenderTarget(null);
+      GraphicsDevice.Clear(Color.BlueViolet);
+      _spriteBatch.Begin();
+      _spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, 1280, 720), Color.White);
       _spriteBatch.End();
 
       // TODO: Add your drawing code here

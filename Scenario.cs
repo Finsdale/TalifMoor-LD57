@@ -10,13 +10,15 @@ namespace Dumpster_Diving
     readonly StorageRoom storageRoomData;
     public PlayerChar player;
     readonly ItemList itemList;
+    readonly ItemGenerator itemGenerator;
 
     public Scenario()
     {
       storageRoomData = new StorageRoom();
       player = new PlayerChar();
       itemList = new ItemList();
-      GenerateItem(new Item(new Point(0, 4), Item.Size.Small, Item.BoxColor.Yellow));
+      itemGenerator = new ItemGenerator();
+      GenerateItem();
     }
 
     public Tile GetTileAtRoomPosition(Point position)
@@ -29,10 +31,13 @@ namespace Dumpster_Diving
       return itemList.Items;
     }
 
-    public void GenerateItem(Item item)
+    public void GenerateItem()
     {
-      itemList.AddItem(item);
-      storageRoomData.ToggleOccupiedForPositions(item.positions);
+      if(!player.HoldsItem && !storageRoomData.AreAnyEntryPositionsOccupied()) {
+        Item item = itemGenerator.GenerateItem(storageRoomData.PositionOfEntryOrigin());
+        itemList.AddItem(item);
+        storageRoomData.ToggleOccupiedForPositions(item.positions);
+      }
     }
 
     public void PlayerGrabsOrDropsItem()

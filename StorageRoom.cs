@@ -50,5 +50,10 @@ namespace Dumpster_Diving
     {
       return storageRoom.Where(x => x.Value.IsEntryPosition() && x.Value.Occupied == true).Count() > 0;
     }
+
+    public Point PositionOfEntryOrigin()
+    {
+      return storageRoom.Where(x => x.Value.Type == Tile.TileType.EntryOrigin).First().Key;
+    }
   }
 }
