@@ -10,20 +10,20 @@ namespace Dumpster_Diving
     public StorageRoom()
     {
       storageRoom = new Dictionary<Point, Tile>();
-      for(var y = 0; y < 10; y++) {
+      for(var y = 0; y < 6; y++) {
         for (var x = 0; x < 10; x++) {
           storageRoom.Add(new Point(x,y), new Tile(new Point(x,y)));
         }
       }
 
-      GetTileAtPosition(new Point(0,4)).Type = Tile.TileType.EntryOrigin;
-      GetTileAtPosition(new Point(0,5)).Type = Tile.TileType.Entry;
-      GetTileAtPosition(new Point(1,4)).Type = Tile.TileType.Entry;
-      GetTileAtPosition(new Point(1,5)).Type = Tile.TileType.Entry;
-      GetTileAtPosition(new Point(8,4)).Type = Tile.TileType.Exit;
-      GetTileAtPosition(new Point(8,5)).Type = Tile.TileType.Exit;
-      GetTileAtPosition(new Point(9,4)).Type = Tile.TileType.Exit;
-      GetTileAtPosition(new Point(9,5)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(0,2)).Type = Tile.TileType.EntryOrigin;
+      GetTileAtPosition(new Point(0,3)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(1,2)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(1,3)).Type = Tile.TileType.Entry;
+      GetTileAtPosition(new Point(8,2)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(8,3)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(9,2)).Type = Tile.TileType.Exit;
+      GetTileAtPosition(new Point(9,3)).Type = Tile.TileType.Exit;
     }
 
     public Tile GetTileAtPosition(Point position)
