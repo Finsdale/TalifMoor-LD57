@@ -44,11 +44,19 @@ namespace Dumpster_Diving
         Scenario.GenerateItem();
         Scenario.Update();
       }
+      else {
+        gameStateMachine.Push(gameStateMachine.gameOverState);
+      }
     }
 
     public void Draw(IArtist artist)
     {
       Patron.Draw(artist);
+    }
+
+    public void ResetScenario()
+    {
+      Scenario.Reset();
     }
   }
 }

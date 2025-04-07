@@ -1,32 +1,39 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Dumpster_Diving
 {
   public class Scenario
   {
 
-    readonly StorageRoom storageRoomData;
+    StorageRoom storageRoomData;
     public PlayerChar player;
-    readonly ItemList itemList;
-    readonly ItemGenerator itemGenerator;
+    ItemList itemList;
+    ItemGenerator itemGenerator;
     public Scoring scoring;
     GameTimer gameTimer;
-    public bool GameOver = false;
+    public bool GameOver;
 
     public Scenario()
+    {
+      itemGenerator = new ItemGenerator();
+      scoring = new Scoring(itemGenerator.GenerateItem(new Point()));
+      gameTimer = new GameTimer();
+      Reset();
+    }
+
+    public void Reset()
     {
       storageRoomData = new StorageRoom();
       player = new PlayerChar();
       itemList = new ItemList();
-      itemGenerator = new ItemGenerator();
-      scoring = new Scoring(itemGenerator.GenerateItem(new Point()));
       GenerateItem();
-      gameTimer = new GameTimer();
+      scoring.Reset();
       gameTimer.Reset();
+      GameOver = false;
     }
-
     public void Update()
     {
       gameTimer.Update();
@@ -131,6 +138,15 @@ namespace Dumpster_Diving
     public void TurnPlayerRight()
     {
       if (!player.HoldsItem) player.TurnRight();
+    }
+
+    public int TimerMeterYPosition()
+    {
+      return gameTimer.MeterYPosition();
+    }
+    public int TimerMeterHeight()
+    {
+      return gameTimer.MeterHeight();
     }
   }
 }

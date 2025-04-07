@@ -29,5 +29,14 @@ namespace Dumpster_Diving
     {
       return Math.Min(1, Current / Length);
     }
+
+    public int MeterHeight()
+    {
+      return (int)(Current / Length * 115);
+    }
+    public int MeterYPosition()
+    {
+      return 225 - (int)(Current / Length * 115);
+    }
   }
 }

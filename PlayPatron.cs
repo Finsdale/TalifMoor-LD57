@@ -54,6 +54,13 @@ namespace Dumpster_Diving
 
       artist.DrawString(TC.Font, $"Score: {scenario.scoring.GetScore()}", new Point(220, 0).ToVector2(), Color.Black);
       artist.DrawString(TC.Font, $"High Score: {scenario.scoring.GetHighScore()}", new Point(14, 0).ToVector2(), Color.Black);
+
+      artist.Draw(TC.MeterBackground,
+        new Rectangle(340, 109, 40, 122), Color.Beige);
+      artist.Draw(TC.MeterFill,
+        new Rectangle(345, scenario.TimerMeterYPosition(), 30, scenario.TimerMeterHeight()), Color.CadetBlue);
+        artist.Draw(TC.MeterBorder,
+          new Rectangle(340, 109, 40, 120), new Color(237,28,36));
     }
 
 

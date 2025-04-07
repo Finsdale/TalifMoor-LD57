@@ -11,6 +11,11 @@ namespace BaseGameProject
       SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, color);
     }
 
+    public void Draw(Texture2D texture, Rectangle destinationRectangle, Color color)
+    {
+      SpriteBatch.Draw(texture, destinationRectangle, color);
+    }
+
     public void DrawString(SpriteFont font, string text, Vector2 position, Color color)
     {
       SpriteBatch.DrawString(font, text, position, color);

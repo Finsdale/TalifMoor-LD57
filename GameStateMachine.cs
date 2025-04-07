@@ -8,12 +8,17 @@ namespace BaseGameProject
   {
     public List<IGameState> GameStack = new();
     public PlayState playState;
+    public TitleState titleState;
+    public GameOverState gameOverState;
     public bool Exit { get; set; } = false;
 
     public GameStateMachine()
     {
       playState = new PlayState(this);
+      titleState = new TitleState(this);
+      gameOverState = new GameOverState(this);
       Push(playState);
+      Push(titleState);
     }
 
     public void Clear()
