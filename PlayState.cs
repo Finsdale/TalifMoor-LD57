@@ -20,16 +20,16 @@ namespace Dumpster_Diving
     public void Update(NewInput input)
     {
       if (!Scenario.GameOver) {
-        if (input.KBInput.IsButtonPressed(Keys.W)) {
+        if (input.KBInput.IsButtonPressed(Keys.W) || input.KBInput.IsButtonPressed(Keys.Up)) {
           Scenario.MovePlayer(new Point(0, -1));
         }
-        if (input.KBInput.IsButtonPressed(Keys.A)) {
+        if (input.KBInput.IsButtonPressed(Keys.A) || input.KBInput.IsButtonPressed(Keys.Left)) {
           Scenario.MovePlayer(new Point(-1, 0));
         }
-        if (input.KBInput.IsButtonPressed(Keys.S)) {
+        if (input.KBInput.IsButtonPressed(Keys.S) || input.KBInput.IsButtonPressed(Keys.Down)) {
           Scenario.MovePlayer(new Point(0, 1));
         }
-        if (input.KBInput.IsButtonPressed(Keys.D)) {
+        if (input.KBInput.IsButtonPressed(Keys.D) || input.KBInput.IsButtonPressed(Keys.Right)) {
           Scenario.MovePlayer(new Point(1, 0));
         }
         if (input.KBInput.IsButtonPressed(Keys.Q)) {

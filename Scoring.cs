@@ -23,7 +23,7 @@ namespace Dumpster_Diving
     {
       int result = 0;
       if (item == requestedItem) {
-        result = 10;
+        result = 12;
       }
       else if(item.color == requestedItem.color || item.size == requestedItem.size) {
         result = 4;
