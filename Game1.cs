@@ -22,7 +22,7 @@ namespace BaseGameProject
       _graphics = new GraphicsDeviceManager(this);
       Content.RootDirectory = "Content";
       IsMouseVisible = true;
-      playerOne = new NewInput(0,true);
+      playerOne = new NewInput(1,true);
       gameStateMachine = new GameStateMachine();
       artist = new ConcreteArtist();
     }

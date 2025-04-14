@@ -102,6 +102,11 @@ namespace Dumpster_Diving
       return storageRoomData.storageRoom.Keys.ToList();
     }
 
+    public void TryToMove(Point movement)
+    {
+
+    }
+
     public void MovePlayer(Point movement)
     {
       Item heldItem = null;
