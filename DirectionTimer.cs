@@ -1,7 +1,7 @@
 ﻿using Dumpster_Diving;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using Microsoft.Xna.Framework;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,9 +13,9 @@ namespace Hoard
   {
     GameTimer timer;
     Point direction = new Point();
-    DirectionTimer()
+    public DirectionTimer()
     {
-      timer = new GameTimer(0.1f);
+      timer = new GameTimer(0.07f);
     }
 
     public bool IsComplete(Point direction)
@@ -29,10 +29,21 @@ namespace Hoard
         }
       }
       else {
+        this.direction = direction;
         timer.Reset();
       }
 
       return result;
+    }
+
+    public void Reset()
+    {
+      timer.Reset();
+    }
+
+    public void Update()
+    {
+      timer?.Update();
     }
   }
 }

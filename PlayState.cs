@@ -21,16 +21,33 @@ namespace Dumpster_Diving
     {
       if (!Scenario.GameOver) {
         if (UpButtonIsDown(input)) {
-          Scenario.MovePlayer(new Point(0, -1));
+          if(UpIsPressed(input)) {
+            Scenario.MovePlayer(new Point(0, -1));
+          } else if(UpIsHeld(input)) {
+            Scenario.ChargeToMove(new Point(0, -1));
+          }
         }
         if (LeftButtonIsDown(input)) {
-          Scenario.MovePlayer(new Point(-1, 0));
+          if(LeftIsPressed(input)) {
+            Scenario.MovePlayer(new Point(-1, 0));
+          } else if(LeftIsHeld(input)) {
+            Scenario.ChargeToMove(new Point(-1, 0));
+          }
         }
         if (DownButtonIsDown(input)) {
-          Scenario.MovePlayer(new Point(0, 1));
+          if (DownIsPressed(input)) {
+            Scenario.MovePlayer(new Point(0, 1));
+          }
+          else if (DownIsHeld(input)) {
+            Scenario.ChargeToMove(new Point(0, 1));
+          }
         }
         if (RightButtonIsDown(input)) {
-          Scenario.MovePlayer(new Point(1, 0));
+          if(RightIsPressed(input)) {
+            Scenario.MovePlayer(new Point(1, 0));
+          } else if (RightIsHeld(input)) {
+            Scenario.ChargeToMove(new Point(1, 0));
+          }
         }
         if (input.KBInput.IsButtonPressed(Keys.Q) || input.Controllers[0].IsButtonPressed(Buttons.LeftShoulder) || input.Controllers[0].IsButtonPressed(Buttons.LeftTrigger)) {
           Scenario.TurnPlayerLeft();

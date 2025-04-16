@@ -27,7 +27,7 @@ namespace Dumpster_Diving
     public void Update(NewInput input)
     {
       if (timer.Complete()) {
-        if (input.KBInput.IsButtonPressed(Keys.Space)) {
+        if (input.KBInput.IsButtonPressed(Keys.Space) || input.Controllers[0].IsButtonPressed(Buttons.A)) {
           gameStateMachine.playState.ResetScenario();
           gameStateMachine.Pop();
         }

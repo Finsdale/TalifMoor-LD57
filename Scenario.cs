@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Hoard;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,6 +16,7 @@ namespace Dumpster_Diving
     public Scoring scoring;
     GameTimer gameTimer;
     public bool GameOver;
+    DirectionTimer directionTimer = new DirectionTimer();
 
     public Scenario()
     {
@@ -102,9 +104,11 @@ namespace Dumpster_Diving
       return storageRoomData.storageRoom.Keys.ToList();
     }
 
-    public void TryToMove(Point movement)
+    public void ChargeToMove(Point movement)
     {
-
+      if (directionTimer.IsComplete(movement)) {
+        MovePlayer(movement);
+      }
     }
 
     public void MovePlayer(Point movement)
