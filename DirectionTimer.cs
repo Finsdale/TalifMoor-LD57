@@ -15,7 +15,7 @@ namespace Hoard
     Point direction = new Point();
     public DirectionTimer()
     {
-      timer = new GameTimer(0.07f);
+      timer = new GameTimer(0.05f);
     }
 
     public bool IsComplete(Point direction)
