@@ -66,6 +66,12 @@ namespace Dumpster_Diving
       positions = newPositions;
     }
 
+    public void MoveTo(Point newPosition)
+    {
+      Point positionDifference = newPosition - OriginPosition;
+      Move(positionDifference);
+    }
+
     public static int WidthBySize(Size size)
     {
       return size switch
