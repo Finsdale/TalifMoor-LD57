@@ -12,11 +12,17 @@ namespace Dumpster_Diving
   {
     int Score = 0;
     int HighScore = 0;
-    Item requestedItem;
-    
-    public Scoring(Item requestedItem)
+    ItemList requestedItems;
+    Item requestedItem { get
+      {
+        return requestedItems.Items[0];
+      } 
+    }
+
+    public Scoring()
     {
-      this.requestedItem = requestedItem;
+      requestedItems = new ItemList();
+      requestedItems.AddBag();
     }
 
     public int ScoreItem(Item item)
@@ -34,9 +40,12 @@ namespace Dumpster_Diving
       }
       return result;
     }
-    public void SetRequestedItem(Item item)
+    public void SetRequestedItem()
     {
-      requestedItem = item;
+      requestedItems.PullNextItem();
+      if (requestedItems.IsBagSetMissing()) {
+        requestedItems.AddBag();
+      }
     }
 
     public int GetScore()

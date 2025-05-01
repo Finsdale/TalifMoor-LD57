@@ -59,7 +59,7 @@ namespace Dumpster_Diving
       if(numOfBags > 0) {
         for(int i = 0;  i < numOfBags; i++) { 
           foreach (var item in ItemBag) {
-            Items.Add(item);
+            Items.Add(new Item(new Point(), item.size, item.color));
           }
         }
       }
@@ -77,7 +77,8 @@ namespace Dumpster_Diving
         int nextItem = random.Next(copiedList.Count);
         newItemList.Add(copiedList[nextItem]);
         copiedList.RemoveAt(nextItem);
-      }    
+      }
+      Items = newItemList;
     }
 
     public Item PullNextItem()

@@ -11,8 +11,7 @@ namespace Dumpster_Diving
 
     StorageRoom storageRoomData;
     public PlayerChar player;
-    ItemList itemList;
-    ItemGenerator itemGenerator;
+    ItemList currentAreaItems, storedItemList;
     public Scoring scoring;
     GameTimer gameTimer;
     public bool GameOver;
@@ -20,8 +19,7 @@ namespace Dumpster_Diving
 
     public Scenario()
     {
-      itemGenerator = new ItemGenerator();
-      scoring = new Scoring(itemGenerator.GenerateItem(new Point()));
+      scoring = new Scoring();
       gameTimer = new GameTimer();
       Reset();
     }
@@ -30,7 +28,9 @@ namespace Dumpster_Diving
     {
       storageRoomData = new StorageRoom();
       player = new PlayerChar();
-      itemList = new ItemList();
+      currentAreaItems = new ItemList();
+      storedItemList = new ItemList();
+      storedItemList.AddBag(3);
       GenerateItem();
       scoring.Reset();
       gameTimer.Reset();
@@ -51,15 +51,19 @@ namespace Dumpster_Diving
 
     public List<Item> Items()
     {
-      return itemList.Items;
+      return currentAreaItems.Items;
     }
 
     public void GenerateItem()
     {
       if(!player.HoldsItem && !storageRoomData.AreAnyEntryPositionsOccupied() && PlayerIsNotOnEntryZone()) {
-        Item item = itemGenerator.GenerateItem(storageRoomData.PositionOfEntryOrigin());
-        itemList.AddItem(item);
+        Item item = storedItemList.PullNextItem();
+        item.MoveTo(new Point(0,2));
+        currentAreaItems.AddItem(item);
         storageRoomData.ToggleOccupiedForPositions(item.positions);
+        if (storedItemList.IsBagSetMissing(3)) {
+          storedItemList.AddBag();
+        }
       }
     }
 
@@ -72,14 +76,14 @@ namespace Dumpster_Diving
     {
       Item heldItem;
       if (player.HoldsItem) {
-        heldItem = itemList.GetItemAtLocation(player.FacedPosition());
+        heldItem = currentAreaItems.GetItemAtLocation(player.FacedPosition());
         List<Point> exitTilePositions = storageRoomData.GetExitTilePositions();
         int coveredPositions = exitTilePositions.Intersect(heldItem.positions).Count();
         if(coveredPositions == heldItem.NumberOfOccupiedSpaces() && storageRoomData.ExitZoneIsClean()) {
           int pointsGained = scoring.ScoreItem(heldItem);
           gameTimer.MatchBonus(pointsGained);
-          itemList.RemoveHeldItem();
-          scoring.SetRequestedItem(itemGenerator.GenerateItem(new Point()));
+          currentAreaItems.RemoveHeldItem();
+          scoring.SetRequestedItem();
         }
         else {
           storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
@@ -88,7 +92,7 @@ namespace Dumpster_Diving
         player.HoldsItem = false;
       }
       else if(PlayerIsFacingItem()) {
-        heldItem = itemList.GetItemAtLocation(player.FacedPosition());
+        heldItem = currentAreaItems.GetItemAtLocation(player.FacedPosition());
         storageRoomData.ToggleOccupiedForPositions(heldItem.positions);
         heldItem.isHeld = true;
         player.HoldsItem = true;
@@ -96,7 +100,7 @@ namespace Dumpster_Diving
     }
     public bool PlayerIsFacingItem()
     {
-      return itemList.HasItemAtLocation(player.FacedPosition());
+      return currentAreaItems.HasItemAtLocation(player.FacedPosition());
     }
 
     public List<Point> StorageRoomTilePositions()
@@ -118,7 +122,7 @@ namespace Dumpster_Diving
       List<Point> checkedLocations = new();
       checkedLocations.Add(player.Position + movement);
       if (player.HoldsItem) {
-        heldItem = itemList.GetHeldItem();
+        heldItem = currentAreaItems.GetHeldItem();
         foreach(Point position in heldItem.positions) {
           checkedLocations.Add(position + movement);
         }
